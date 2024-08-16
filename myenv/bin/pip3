@@ -1,4 +1,4 @@
-#!/Users/twoweekhee/Desktop/textMiningFe/myenv/bin/python3.12
+#!/Users/twoweekhee/Desktop/textMining/myenv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
