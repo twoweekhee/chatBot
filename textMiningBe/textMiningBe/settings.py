@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,9 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chatGptApi',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # CORS 추가
+    'django.middleware.common.CommonMiddleware',  # CORS 추가
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,6 +53,36 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+##CORS
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://localhost:3000",
+]
+CORS_ALLOW_CREDENTIALS = True # <-쿠키가 cross-site HTTP 요청에 포함될 수 있다
+
+CORS_ALLOW_METHODS = (  #<-실제 요청에 허용되는 HTTP 동사 리스트
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+
+CORS_ALLOW_HEADERS = ( 
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
+
+APPEND_SLASH = False #<- / 관련 에러 제거
 
 ROOT_URLCONF = 'textMiningBe.urls'
 
@@ -122,3 +156,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#environ을 기존 import에 추가
+import environ
+
+env = environ.Env(DEBUG=(bool, True)) #환경변수를 불러올 수 있는 상태로 세팅
+
+#환경변수 파일 읽어오기
+environ.Env.read_env(
+    env_file=os.path.join(BASE_DIR, '.env')
+)
+
+OPEN_API_KEY = env('OPEN_API_KEY') #SECEREY_KEY 값 불러오기
+
+DEBUG = True #DEBUG 값 불러오기
