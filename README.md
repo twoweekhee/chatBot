@@ -22,3 +22,48 @@ pip install openai
 python manage.py runserver
 
 ```
+
+# E Chart 사용
+
+[Apache ECharts](https://echarts.apache.org/en/index.html)
+
+[Examples - Apache ECharts](https://echarts.apache.org/examples/en/editor.html?c=bar-simple)
+
+### 예시 데이터
+
+```jsx
+option = {
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      data: [120, 200, 150, 80, 70, 110, 130],
+      type: 'bar'
+    }
+  ]
+};
+```
+
+### 적용 방법
+
+```js
+npm install echarts
+-----
+
+import * as echarts from 'echarts';
+
+
+const chartDom = document.getElementById('main');
+const myChart = echarts.init(chartDom);
+
+myChart.setOption(chartOptions);
+```
+
+```html
+<ChartContainer id="main" />
+```
