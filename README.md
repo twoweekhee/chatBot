@@ -18,4 +18,6 @@ pip install django-cors-headers
 
 pip install openai
 
+python manage.py runserver
+
 ```
